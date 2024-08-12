@@ -2,6 +2,7 @@ package de.bsi.chatbot.dataimport;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class DocumentImport {
 
     private final VectorStore vectorStore;
@@ -30,9 +32,11 @@ public class DocumentImport {
 
     @PostConstruct
     private void importDocuments() {
+        log.info("Clearing vector store");
         jdbcTemplate.update("DELETE FROM vector_store");
         var doc = new Document(EXAMPLE_DOCUMENT, Map.of("Add", "meta", "data", "here"));
         vectorStore.accept(textSplitter.split(doc));
+        log.info("Documents in vector store imported");
     }
 
 }
