@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -34,7 +33,7 @@ public class DocumentImport {
         log.info("Clearing vector store");
         jdbcTemplate.update("DELETE FROM vector_store");
 
-        var docs = List.of(new Document(EXAMPLE_DOCUMENT, Map.of("Add", "meta", "data", "here")));
+        var docs = List.of(new Document(EXAMPLE_DOCUMENT));
         vectorStore.accept(docs);
         log.info("{} documents in vector store imported", docs.size());
     }

@@ -6,6 +6,7 @@ import org.springframework.ai.azure.openai.AzureOpenAiChatModel;
 import org.springframework.ai.azure.openai.AzureOpenAiChatOptions;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
@@ -39,20 +40,21 @@ public class ChatService {
 
     public Message chat(String message) {
         var userMessage = new UserMessage(message);
-        var prompt = buildPrompt(userMessage);
-        var aiResponse = chatModel.call(prompt);
+        Prompt prompt = buildPrompt(userMessage);
+        ChatResponse aiResponse = chatModel.call(prompt);
         return aiResponse.getResult().getOutput();
     }
 
     private Prompt buildPrompt(UserMessage userMessage) {
-        var messages = List.of(buildContextMessage(userMessage.getContent()), userMessage);
-        var aiFunctions = buildOptions();
+        Message contextMessage = buildContextMessage(userMessage.getContent());
+        var messages = List.of(contextMessage, userMessage);
+        ChatOptions aiFunctions = buildOptions();
         return new Prompt(messages, aiFunctions);
     }
 
     private Message buildContextMessage(String message) {
         log.debug("Searching similar documents for: {}", message);
-        var similarDocuments = vectorStore.similaritySearch(message)
+        String similarDocuments = vectorStore.similaritySearch(message)
                 .stream()
                 .map(Document::getContent)
                 .collect(Collectors.joining(System.lineSeparator()));
