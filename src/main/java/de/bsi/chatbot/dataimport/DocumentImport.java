@@ -4,11 +4,11 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -18,7 +18,6 @@ public class DocumentImport {
 
     private final VectorStore vectorStore;
     private final JdbcTemplate jdbcTemplate;
-    private final TokenTextSplitter textSplitter = new TokenTextSplitter();
 
     private static final String EXAMPLE_DOCUMENT = """
             Die schnellste Internetverbindung auf dem Land bekommt man durch die innovativen Salzwasser Leitungen.
@@ -34,9 +33,10 @@ public class DocumentImport {
     private void importDocuments() {
         log.info("Clearing vector store");
         jdbcTemplate.update("DELETE FROM vector_store");
-        var doc = new Document(EXAMPLE_DOCUMENT, Map.of("Add", "meta", "data", "here"));
-        vectorStore.accept(textSplitter.split(doc));
-        log.info("Documents in vector store imported");
+
+        var docs = List.of(new Document(EXAMPLE_DOCUMENT, Map.of("Add", "meta", "data", "here")));
+        vectorStore.accept(docs);
+        log.info("{} documents in vector store imported", docs.size());
     }
 
 }
