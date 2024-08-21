@@ -3,11 +3,9 @@ package de.bsi.chatbot.chat.llm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.azure.openai.AzureOpenAiChatModel;
-import org.springframework.ai.azure.openai.AzureOpenAiChatOptions;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
@@ -21,23 +19,17 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ChatService {
+public class RagChatService {
 
     private final AzureOpenAiChatModel chatModel;
     private final VectorStore vectorStore;
 
     public Message chat(String message) {
         var userMessage = new UserMessage(message);
-        Prompt prompt = buildPrompt(userMessage);
+        Message systemMessage = buildContextMessage(message);
+        var prompt = new Prompt(List.of(systemMessage, userMessage));
         ChatResponse aiResponse = chatModel.call(prompt);
         return aiResponse.getResult().getOutput();
-    }
-
-    private Prompt buildPrompt(UserMessage userMessage) {
-        Message contextMessage = buildContextMessage(userMessage.getContent());
-        var messages = List.of(contextMessage, userMessage);
-        ChatOptions aiFunctions = buildOptions();
-        return new Prompt(messages, aiFunctions);
     }
 
     private Message buildContextMessage(String message) {
@@ -60,12 +52,5 @@ public class ChatService {
             {documents}
             
             """);
-
-    private ChatOptions buildOptions() {
-        return AzureOpenAiChatOptions.builder()
-                .withFunction("checkSaltwaterConnectionWithCityName")
-                .withFunction("checkSaltwaterConnectionWithPostalCode")
-                .build();
-    }
 
 }
