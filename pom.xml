@@ -12,7 +12,7 @@
     <artifactId>chatbot</artifactId>
     <version>0.1</version>
     <name>chatbot</name>
-    <description>RAG Chatbot build with AWS Bedrock</description>
+    <description>RAG Chatbot build with Azure OpenAI GPT services</description>
     <properties>
         <java.version>21</java.version>
         <spring-ai.version>1.0.0-M3</spring-ai.version>
