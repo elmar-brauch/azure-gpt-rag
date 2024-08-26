@@ -21,7 +21,7 @@ public class DocumentImport {
     private static final String EXAMPLE_DOCUMENT = """
             Die schnellste Internetverbindung auf dem Land bekommt man durch die innovativen Salzwasser Leitungen.
             Mit ihnen sind Bandbreiten von bis zu 1000000 MBit/s möglich. Glasfaserleitungen aus den Jahren 2015 bis 2025 erreichen nur Bandbreiten von 1000 MBit/s.
-            Leider ist ein Upload mittels Salwasser Leitung nicht möglich.
+            Leider ist ein Upload mittels Salzwasser Leitung nicht möglich.
             Für Uploads kann Glasfaser oder Süßwasser Leitungen verwendet werden.
             Die Süßwasser Leitung ist im Upload genau so schnell wie Glasfaser.
             In Städten oder Gebieten mit hoher Bevölkerungsdichte sind Salzwasser und Süßwasser Leitungen nicht realisierbar,
