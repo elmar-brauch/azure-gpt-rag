@@ -1,11 +1,11 @@
 package de.bsi.chatbot.chat.llm;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.azure.openai.AzureOpenAiChatModel;
 import org.springframework.ai.azure.openai.AzureOpenAiChatOptions;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -19,11 +19,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class ChatService {
 
-    private final AzureOpenAiChatModel chatModel;
+    private final ChatClient chatClient;
     private final VectorStore vectorStore;
 
     private static final SystemPromptTemplate template = new SystemPromptTemplate("""
@@ -31,17 +30,21 @@ public class ChatService {
             
             Verwende die Informationen aus dem Abschnitt DOKUMENTE, um genaue Antworten zu geben,
             aber tu so, als ob du diese Informationen von Natur aus wüsstest.
-            Wenn du dir nicht sicher bist, gib einfach an, dass du es nicht weißt.
+            Wenn du dir nicht sicher bist, gib einfach an, dass du es nicht weisst.
             
             DOKUMENTE:
             {documents}
-            
             """);
+
+    public ChatService(ChatModel chatModel, VectorStore vectorStore) {
+        this.chatClient = ChatClient.builder(chatModel).build();
+        this.vectorStore = vectorStore;
+    }
 
     public Message chat(String message) {
         var userMessage = new UserMessage(message);
         Prompt prompt = buildPrompt(userMessage);
-        ChatResponse aiResponse = chatModel.call(prompt);
+        ChatResponse aiResponse = chatClient.prompt(prompt).call().chatResponse();
         return aiResponse.getResult().getOutput();
     }
 
