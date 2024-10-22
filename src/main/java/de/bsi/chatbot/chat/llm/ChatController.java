@@ -18,7 +18,7 @@ public class ChatController {
     @PostMapping("/chat")
     public String chat(@RequestBody ChatRequestDTO chatRequest) {
         log.debug("/chat received following chat message: {}", chatRequest.message());
-        // TODO Change service for demo
+        // Change service for demo
         var aiResponse = simpleAiChatService.chat(chatRequest.message());
         log.debug("AI response: {}", aiResponse.getContent());
         return aiResponse.getContent();
