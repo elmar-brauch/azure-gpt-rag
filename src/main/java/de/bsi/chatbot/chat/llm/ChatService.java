@@ -48,7 +48,7 @@ public class ChatService {
             Du assistierst bei Fragen zum Internetanschluss.
             
             Verwende die Informationen aus dem Abschnitt DOKUMENTE, um genaue Antworten zu geben,
-            aber tu so, als ob du diese Informationen von Natur aus wüsstest.
+            aber tu so, als ob du diese Informationen von Natur aus wuesstest.
             Wenn du dir nicht sicher bist, gib einfach an, dass du es nicht weisst.
             
             DOKUMENTE:
