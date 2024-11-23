@@ -1,0 +1,18 @@
+[
+  {
+    "userMessage": "Welche Internet-Verbindung ist auf dem Land möglich?",
+    "expectedResponse": "Auf dem Land ist die innovative Salzwasserleitung mit Bandbreiten von bis zu 1.000.000 MBit/s möglich. Für Uploads können Glasfaser- oder Süßwasserleitungen verwendet werden."
+  },
+  {
+    "userMessage": "Ich wohne im Dorf Trautheim. Welche Bandbreite gibt es dort?",
+    "expectedResponse": "In Trautheim sind Salzwasserleitungen möglich mit Bandbreiten von bis zu 1.000.000 MBit/s."
+  },
+  {
+    "userMessage": "Meine Postleitzahl ist 64367.",
+    "expectedResponse": "An der Postleitzahl 64367 sind Salzwasserleitungen möglich mit Bandbreiten von bis zu 1.000.000 MBit/s."
+  },
+  {
+    "userMessage": "Meine Adresse ist 12345 Berlin - was geht da?",
+    "expectedResponse": "In Berlin (12345) ist eine Salzwasserleitung nicht verfügbar. In städtischen Gebieten wie Berlin müssen Kunden auf klassische Glasfaserleitungen zurückgreifen."
+  }
+]
