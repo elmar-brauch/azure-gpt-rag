@@ -2,7 +2,6 @@ package de.bsi.chatbot.chat.llm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +12,10 @@ import org.springframework.core.io.Resource;
 import java.io.IOException;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest(properties = {"logging.level.org.springframework.ai=INFO"})
-@Disabled("This test is about quality rating and its execution produces AI usage costs, so it is disabled in build.")
 @Import(AiResponseRater.class)
 @Slf4j
 class ChatServiceTest {
@@ -49,6 +48,12 @@ class ChatServiceTest {
     private List<GoldenAnswer> readGoldenAnswers() throws IOException {
         return jsonMapper.readValue(goldenAnswersJson.getInputStream(),
                 jsonMapper.getTypeFactory().constructCollectionType(List.class, GoldenAnswer.class));
+    }
+
+    // Demo @Test
+    void notWorkingTest() {
+        var aiResponse = chatService.chat("Hello, which Internet connection is available?");
+        assertEquals("TODO Copy first response", aiResponse.getContent());
     }
 
 }
