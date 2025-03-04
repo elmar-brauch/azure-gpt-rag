@@ -2,7 +2,6 @@ package de.bsi.chatbot.chat.llm;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
@@ -18,8 +17,8 @@ public class AiResponseRater {
         this.ratingClient = ChatClient.create(chatModel);
     }
 
-    public Rating rateAiResponse(String userMessage, String expected, Message actual) {
-        var ratingMessage = new UserMessage(RATING_MESSAGE_TEMPLATE.formatted(actual.getContent(), userMessage, expected));
+    public Rating rateAiResponse(String userMessage, String expected, String actual) {
+        var ratingMessage = new UserMessage(RATING_MESSAGE_TEMPLATE.formatted(actual, userMessage, expected));
         var systemMessage = new SystemPromptTemplate(RATING_SYSTEM_PROMPT).createMessage();
 
         return ratingClient.prompt()
