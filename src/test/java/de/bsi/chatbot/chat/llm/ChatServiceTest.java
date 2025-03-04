@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Slf4j
 class ChatServiceTest {
 
-    @Autowired private ChatService chatService;
+    @Autowired private RagChat ragChat;
     @Autowired private AiResponseRater rater;
 
     @Value("classpath:goldenAnswers.json")
@@ -38,7 +38,7 @@ class ChatServiceTest {
     }
 
     private void oneMessageTest(GoldenAnswer goldenAnswer) {
-        var aiResponse = chatService.chat(goldenAnswer.getUserMessage());
+        var aiResponse = ragChat.chat(goldenAnswer.getUserMessage());
 
         var rating = rater.rateAiResponse(goldenAnswer.getUserMessage(), goldenAnswer.getExpectedResponse(), aiResponse);
         log.info("\n\nRATING {}\nUSER QUESTION: {}\nAI RESPONSE  : {}\n",
@@ -56,7 +56,7 @@ class ChatServiceTest {
 
     // Demo @Test
     void notWorkingTest() {
-        var aiResponse = chatService.chat("Hello, which Internet connection is available?");
+        var aiResponse = ragChat.chat("Hello, which Internet connection is available?");
         assertEquals("TODO Copy first response", aiResponse);
     }
 

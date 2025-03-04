@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ChatController {
 
-    private final ChatService chatService;
+    private final RagChat ragChat;
+    private final SimpleChat simpleChat;
 
     @PostMapping("/chat")
     public String chat(@RequestBody ChatRequestDTO chatRequest) {
         log.debug("/chat received following chat message: {}", chatRequest.message());
-        return chatService.chat(chatRequest.message());
+        return ragChat.chat(chatRequest.message());
     }
 
 }

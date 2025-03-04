@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ChatService {
+public class RagChat {
 
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
@@ -32,7 +32,7 @@ public class ChatService {
             {documents}
             """);
 
-    public ChatService(ChatModel chatModel, VectorStore vectorStore) {
+    public RagChat(ChatModel chatModel, VectorStore vectorStore) {
         this.chatClient = ChatClient.builder(chatModel).build();
         this.vectorStore = vectorStore;
     }
