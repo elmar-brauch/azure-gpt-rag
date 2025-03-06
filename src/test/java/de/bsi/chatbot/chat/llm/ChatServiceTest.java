@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest(properties = {"logging.level.org.springframework.ai=INFO"})
-@ActiveProfiles("local")
 @Disabled("This test is about quality rating and its execution produces AI usage costs, so it is disabled in build.")
 @Import(AiResponseRater.class)
 @Slf4j
