@@ -17,7 +17,7 @@ public class ChatController {
     @PostMapping("/chat")
     public String chat(@RequestBody ChatRequestDTO chatRequest) {
         log.debug("/chat received following chat message: {}", chatRequest.message());
-        return ragChat.chat(chatRequest.message());
+        return simpleChat.chat(chatRequest.message());
     }
 
 }
