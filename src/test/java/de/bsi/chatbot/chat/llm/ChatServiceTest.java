@@ -54,10 +54,4 @@ class ChatServiceTest {
                 jsonMapper.getTypeFactory().constructCollectionType(List.class, GoldenAnswer.class));
     }
 
-    // Demo @Test
-    void notWorkingTest() {
-        var aiResponse = ragChat.chat("Hello, which Internet connection is available?");
-        assertEquals("TODO Copy first response", aiResponse);
-    }
-
 }

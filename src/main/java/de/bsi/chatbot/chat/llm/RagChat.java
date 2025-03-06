@@ -21,17 +21,6 @@ public class RagChat {
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
 
-    private static final SystemPromptTemplate template = new SystemPromptTemplate("""
-            Du assistierst bei Fragen zum Internetanschluss.
-            
-            Verwende die Informationen aus dem Abschnitt DOKUMENTE, um genaue Antworten zu geben,
-            aber tu so, als ob du diese Informationen von Natur aus wüsstest.
-            Wenn du dir nicht sicher bist, gib einfach an, dass du es nicht weisst.
-            
-            DOKUMENTE:
-            {documents}
-            """);
-
     public RagChat(ChatModel chatModel, VectorStore vectorStore) {
         this.chatClient = ChatClient.builder(chatModel).build();
         this.vectorStore = vectorStore;
@@ -46,6 +35,17 @@ public class RagChat {
                 .call()
                 .content();
     }
+
+    private static final SystemPromptTemplate template = new SystemPromptTemplate("""
+            Du assistierst bei Fragen zum Internetanschluss.
+            
+            Verwende die Informationen aus dem Abschnitt DOKUMENTE, um genaue Antworten zu geben,
+            aber tu so, als ob du diese Informationen von Natur aus wüsstest.
+            Wenn du dir nicht sicher bist, gib einfach an, dass du es nicht weisst.
+            
+            DOKUMENTE:
+            {documents}
+            """);
 
     private Message buildContextMessage(String message) {
         log.debug("Searching similar documents for: {}", message);
